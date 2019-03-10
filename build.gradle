@@ -1,0 +1,64 @@
+plugins {
+  id 'java'
+  id 'application'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+  implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+  implementation "com.google.inject:guice:${googleGuiceVersion}"
+  testImplementation "org.testng:testng:${testNgVersion}"
+  testImplementation "org.uncommons:reportng:${reportNgVersion}"
+  testImplementation "io.cucumber:cucumber-java:${cucumberJavaVersion}"
+  testImplementation "io.cucumber:cucumber-testng:${cucumberJavaVersion}"
+  testImplementation "org.easytesting:fest-assert-core:${festAssertCoreVersion}"
+}
+
+group = projectGroup
+version = projectVersion
+mainClassName = projectMainClass
+sourceCompatibility = projectSourceCompatibility
+targetCompatibility = projectTargetCompatibility
+
+configurations {
+  cucumber
+  cucumberRuntime {
+    extendsFrom testRuntime
+  }
+}
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'Utility classes for Java 8',
+      'Implementation-Version': projectVersion,
+      'Main-Class': projectMainClass
+  }
+}
+
+test {
+  useTestNG() {
+    listeners << 'org.uncommons.reportng.HTMLReporter'
+    listeners << 'org.uncommons.reportng.JUnitXMLReporter'
+    excludeGroups << excludedGroups
+    includeGroups << includedGroups
+  }
+
+  reports.html.enabled = true
+
+  testLogging {
+    showStandardStreams = true
+    exceptionFormat 'full'
+  }
+}
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs += ['-Xdoclint:none', '-Xlint:all', '-nowarn']
+}
+
+tasks.withType(Tar) {
+  compression = Compression.BZIP2
+}
