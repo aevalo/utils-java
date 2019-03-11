@@ -1,6 +1,5 @@
 plugins {
-  id 'java'
-  id 'application'
+  id 'java-library'
 }
 
 repositories {
@@ -20,7 +19,6 @@ dependencies {
 
 group = projectGroup
 version = projectVersion
-mainClassName = projectMainClass
 sourceCompatibility = projectSourceCompatibility
 targetCompatibility = projectTargetCompatibility
 
@@ -57,8 +55,4 @@ test {
 
 tasks.withType(JavaCompile) {
   options.compilerArgs += ['-Xdoclint:none', '-Xlint:all', '-nowarn']
-}
-
-tasks.withType(Tar) {
-  compression = Compression.BZIP2
 }

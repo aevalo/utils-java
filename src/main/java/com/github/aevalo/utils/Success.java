@@ -1,6 +1,6 @@
 package com.github.aevalo.utils;
 
-public class Success<T> extends Try<T> {
+public final class Success<T> extends Try<T> {
   public Success(T value) { this.value = value; }
 
   @Override

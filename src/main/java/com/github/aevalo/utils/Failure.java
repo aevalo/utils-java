@@ -1,6 +1,6 @@
 package com.github.aevalo.utils;
 
-public class Failure<T> extends Try<T> {
+public final class Failure<T> extends Try<T> {
   public Failure(Exception exception) { this.exception = exception; }
 
   @Override
